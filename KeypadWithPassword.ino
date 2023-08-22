@@ -1,5 +1,6 @@
 #include "SoftwareSerial.h"
 
+//Et eller andet sted i det her rod, bliver keypad'en defineret som port D2, tror jeg nok. 
 #if defined(ARDUINO_ARCH_AVR)
 #define SERIAL Serial
 SoftwareSerial mySerial(2,3);
@@ -10,6 +11,9 @@ SoftwareSerial mySerial(2,3);
 #else
 
 #endif
+//Buzzeren skal sættes i A3. Juster denne kode, hvis buzzeren forbindes til en anden port
+//VIGTIGT: Buzzeren skal sidde i en analog port, for at den virker ordenligt.
+#define buzzer A3
 
 //Øverste er det aktuelle password, nederste er brugerens input
 int password[4] = {1, 2, 3, 4};
@@ -24,7 +28,9 @@ void setup() {
     SERIAL.begin(9600);  // start serial for output
     SERIAL.println("Version:v1.0");
 
-
+  //Her sættes buzzeren op, og sættes til at være stille. For ellers begynder den at kæfte op, det mikrosekund den får strøm.
+  pinMode(buzzer, OUTPUT);
+  noTone(buzzer);
 }
 
 void loop() {
@@ -35,6 +41,10 @@ void loop() {
 void assign(int value) {
   //Det her ændrer værdien for et punkt i inputpasswordet
   inputKeypad[currentLength] = value;
+  //buzzerens lyd fungerer her vha, "tone", fordi alternativet er en helvedes støj, der driver alle i lokalet til vanvid.
+  tone(buzzer, 1000);
+  delay(100);
+  noTone(buzzer);
   currentLength ++;
 
   //nedenstående aktiveres først, når brugerens input er samme længde som passwordet. Det er lavet, så det ikke skal ændres, hvis passwordet bliver modificeret.
@@ -56,6 +66,7 @@ void assign(int value) {
     }
   currentLength = 0;  
   }
+  //delay(500);
 }
 
 
