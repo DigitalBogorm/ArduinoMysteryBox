@@ -3,5 +3,6 @@ Liste over fysiske komponenter, samt deres porte. Hvis du ændrer koden, fungere
   Grove 12-channel capacitive touch keypad i port D2
   Grove 4-digit display i port D3
   Grove LCD, RGB backlit i I2C
+  Buzzer sat til i A3
 
 Listen og koden antager, at man gør brug af et base shield til en Arduino UNO. Gør man ikke det, må man ændre i koden manuelt.
