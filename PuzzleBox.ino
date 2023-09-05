@@ -41,8 +41,8 @@ rgb_lcd lcd;
 
 //Farver til LCD-displayet
 const int colorR = 0;
-const int colorG = 50;
-const int colorB = 0;
+const int colorG = 10;
+const int colorB = 50;
 //En variabel til at afgøre, om keypad'en tager mod inputs (Test-stadie, do not touch)
 bool read = true;
 
@@ -139,7 +139,7 @@ void assign(int value) {
       if (inputKeypad[i] != password[i]) {
         SERIAL.println("incorrect");
         lcd.clear();
-        colouring(255, 0, colorB);
+        colouring(255, colorG, 0);
         lcd.print("incorrect");
         correct = false;
         delay(1000);
@@ -153,7 +153,7 @@ void assign(int value) {
       delay(250);
       lcd.clear();
       SERIAL.println("confirmed");
-      colouring(colorR, 255, colorB);
+      colouring(colorR, 255, 0);
       lcd.print("2456");
       delay(3000);
       colouring(colorR, colorG, colorB);
