@@ -53,6 +53,8 @@ int currentLength = 0;
 int password[passLength] = {6, 8, 4, 4};
 int inputKeypad[passLength];
 
+//Det password, som rotations-sensorerne skal sættes til:
+int rotPass; 
 
 
 void setup() {
@@ -85,6 +87,12 @@ void setup() {
   lcd.print("Online");
   delay(2000);
   lcd.clear();
+
+  //Randomizes the randomizer
+  randomSeed(analogRead(0));
+  //Randomizes rotation password
+  rotPass = random(0, 9999);
+
 }
 
 void loop() {
@@ -104,7 +112,7 @@ void loop() {
   num = round(degrees1) * 100 + round(degrees2);
   //4-digit-display viser et tal, baseret på num (+10000-delen, er for at den viser '0000', hvis alt er på 0)
   tm1637.displayNum(10000 + num);
-  if (num == 2456) {
+  if (num == rotPass) {
     //SERIAL.println("TestSuccess");
     //digitalWrite(LED, HIGH);
     tone(buzzer, 1000);
@@ -154,7 +162,7 @@ void assign(int value) {
       lcd.clear();
       SERIAL.println("confirmed");
       colouring(colorR, 255, 0);
-      lcd.print("2456");
+      lcd.print(rotPass);
       delay(3000);
       colouring(colorR, colorG, colorB);
       lcd.clear();
